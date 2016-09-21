@@ -14,7 +14,7 @@ module load intel-fc/15.0.3.187
 module load intel-cc/15.0.3.187
 module load openmpi/1.8.8
 module load netcdf/4.3.3.1
-setenv WRFIO_NCD_LARGE_FILE_SUPPORT 1
+export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 ./configure << EOF
 3
 1
@@ -30,7 +30,7 @@ module load intel-fc/15.0.3.187
 module load intel-cc/15.0.3.187
 module load openmpi/1.8.8
 module load netcdf/4.3.3.1
-setenv WRFIO_NCD_LARGE_FILE_SUPPORT 1
+export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 ./configure << EOF
 3
 EOF'''
