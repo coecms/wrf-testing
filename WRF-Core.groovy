@@ -36,6 +36,11 @@ EOF'''
             sh 'module load cdo; cdo diff wrfout_d01_2000-01-24_12\\:00\\:00 /projects/WRF/data/KGO/3.7.1/jan00-nesting/wrfout_d01_2000-01-24_12\\:00\\:00'
             sh 'module load cdo; cdo diff wrfout_d02_2000-01-24_12\\:00\\:00 /projects/WRF/data/KGO/3.7.1/jan00-nesting/wrfout_d02_2000-01-24_12\\:00\\:00'
         }
+        dir('jan00-diagnostics'){
+            stage 'jan00-diagnostics'
+            sh 'qsub -W block=true -v PROJECT,WRF_ROOT runtest.sh'
+            sh 'module load cdo; for file in wrf*_d*_2000-01-24_12\\:00\\:00; do cdo diff $file /projects/WRF/data/KGO/3.7.1/jan00-diagnostics/$file; done'
+        }
     }
     
 }
