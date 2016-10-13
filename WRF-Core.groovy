@@ -4,7 +4,7 @@ node ('saw562.raijin') {
     git changelog: false, poll: false, url: '/projects/WRF/WRFV_3.7.1'
     sh 'git clone https://bitbucket.org/ScottWales/wrf-testing.git tests'
     
-    currentBuild.displayName = params.VERSION
+    currentBuild.displayName += ' ' + params.VERSION
     env.WRF_ROOT = pwd()
     
     stage 'compile_WRF'
