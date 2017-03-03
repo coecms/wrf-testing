@@ -1,7 +1,7 @@
 node ('saw562.raijin') {
     stage 'extract'
     sh 'rm -rf jenkins-tests'
-    git changelog: false, poll: false, url: 'https://bitbucket.org/ccarouge/unsw-ccrc-wrf-perso', branch: 'ccrc-3.7.1'
+    git changelog: false, poll: false, url: 'https://bitbucket.org/ccarouge/unsw-ccrc-wrf-perso', branch: 'new_version'
     sh 'git clone https://bitbucket.org/ccarouge/wrf-testing.git jenkins-tests'
 
     currentBuild.displayName += ' ' + params.VERSION
