@@ -1,11 +1,7 @@
 node ('saw562.raijin') {
     stage 'extract'
     sh 'rm -rf tests'
-    if (params.VERSION == "3.9") {
-        git changelog: false, poll: false, url: '/projects/WRF/WRFV_3.9'
-    } else {
-        git changelog: false, poll: false, url: '/projects/WRF/WRFV_3.7.1'
-    }
+    git changelog: false, poll: false, url: '/projects/WRF/WRFV_${params.VERSION}'
     sh 'git clone https://bitbucket.org/ccarouge/wrf-testing.git tests'
 
     currentBuild.displayName += ' ' + params.VERSION
