@@ -60,6 +60,11 @@ EOF'''
             sh 'qsub -W umask=0022 -W block=true -v PROJECT,WRF_ROOT runtest.sh'
             sh 'module load cdo; for file in wrfxtrm_d*_2000-01-24_12\\:00\\:00; do cdo diffn $file /projects/WRF/data/KGO/3.7.1/jan00-diagnostics/$file; done'
         }
+        dir('sfcevp'){
+            stage 'sfcevp'
+            sh 'qsub -W umask=0022 -W block=true -v PROJECT,WRF_ROOT runtest.sh'
+            sh 'module load cdo; for file in wrfout_d*_2000-01-24_12\\:00\\:00; do cdo diffn $file /projects/WRF/data/KGO/3.7.1/sfcevp/$file; done'
+        }
     }
 
 }
