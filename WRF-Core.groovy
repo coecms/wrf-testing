@@ -1,5 +1,7 @@
 node ('saw562.raijin') {
     stage 'extract'
+    // Get the tests. Clone the wrf-testing repository again in tests/
+    // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf tests'
     git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
@@ -12,6 +14,7 @@ node ('saw562.raijin') {
     env.WRF_ROOT = pwd()
 
     stage 'clean_WRF' 
+    // Clean previous WRFV3 compilation if wanting to start from scratch (optional)
     dir('WRFV3') {
        if (params.CLEAN_WRF == true) {
            sh './clean -a'
@@ -19,6 +22,7 @@ node ('saw562.raijin') {
     }
     
     stage 'clean_WPS' 
+    // Clean previous WPS compilation if wanting to start from scratch (optional)
     dir('WPS') {
        if (params.CLEAN_WPS == true) {
            sh './clean -a'
@@ -26,16 +30,19 @@ node ('saw562.raijin') {
     }
 
     stage 'compile_WRF'
+    // Compile WRFV3
     dir('WRFV3') {
         sh 'qsub -W umask=0022 -W block=true -q express ./run_compile'
     }
 
     stage 'compile_WPS'
+    // Compile WPS
     dir('WPS') {
         sh 'qsub -W umask=0022 -W block=true -q express ./run_compile'
     }
 
     dir('tests'){
+    // Start run tests.
         dir('jan00'){
             stage 'jan00'
             sh 'qsub -W umask=0022 -W block=true -v PROJECT,WRF_ROOT runtest.sh'
