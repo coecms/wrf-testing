@@ -7,7 +7,7 @@
 #PBS -l ncpus=4
 #PBS -l mem=4gb
 #PBS -l wd
-#PBS -l storage=scratch/w35
+#PBS -l storage=scratch/w35+gdata/sx70
 #PBS -W umask=0022
 
 set -eu
@@ -30,7 +30,7 @@ module load openmpi
 
 geogrid.exe
 
-link_grib.csh /projects/WRF/data/JAN00_v4.0.1/fnl_2000012
+link_grib.csh /g/data/sx70/data/JAN00_v4/fnl_2000012
 
 ungrib.exe
 
