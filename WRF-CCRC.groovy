@@ -4,7 +4,7 @@ node ('saw562.raijin') {
     // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf jenkins-tests'
     git changelog: false, poll: false, url: 'https://bitbucket.org/ccarouge/unsw-ccrc-wrf-perso', branch: "V${params.VERSION}"
-    sh 'git clone https://bitbucket.org/ccarouge/wrf-testing.git jenkins-tests'
+    sh 'git clone https://github.com/coecms/wrf-testing.git jenkins-tests'
     dir('jenkins-tests') {
        sh "git branch --track ${params.VERSION} origin/${params.VERSION}"
        sh "git checkout ${params.VERSION}"  
