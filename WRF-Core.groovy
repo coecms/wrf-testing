@@ -45,9 +45,9 @@ node ('ccc561.gadi') {
 
     stage 'compile_UPP'
     // Compile UPP
-    dir('UPPV3.2') {
-        sh './run_compile -t'
-    }
+    //dir('UPPV3.2') {
+    //    sh './run_compile -t'
+    //}
 
     dir('tests'){
     // Start run tests.
@@ -115,12 +115,12 @@ node ('ccc561.gadi') {
                 sh './compare_output.sh'
             }
         }
-	dir('UPP'){
-            dir('postprd'){
-	        stage 'UPP'
-	        sh './run_unipost_frames'
-	    }
-        }
+	//dir('UPP'){
+        //    dir('postprd'){
+	//        stage 'UPP'
+	//        sh './run_unipost_frames'
+	//    }
+        //}
     }
 
 }
