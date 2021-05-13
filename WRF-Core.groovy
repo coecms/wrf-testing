@@ -7,8 +7,8 @@ node ('ccc561.gadi') {
     // git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
     dir('tests') {
-       sh "git branch --track 4.2 origin/4.2"
-       sh "git checkout 4.2"  
+       sh "git branch --track 4.2.1 origin/4.2.1"
+       sh "git checkout 4.2.1"  
     }
 
     currentBuild.displayName += ' ' + params.VERSION
@@ -16,8 +16,8 @@ node ('ccc561.gadi') {
     env.KGO_ROOT = '/g/data/sx70/data/KGO/${params.VERSION}'
 
     stage 'clean_WRF' 
-    // Clean previous WRFV3 compilation if wanting to start from scratch (optional)
-    dir('WRFV3') {
+    // Clean previous WRF compilation if wanting to start from scratch (optional)
+    dir('WRF') {
        if (params.CLEAN_WRF == true) {
            sh './clean -a'
        }
@@ -32,9 +32,9 @@ node ('ccc561.gadi') {
     }
 
     stage 'compile_WRF'
-    // Compile WRFV3
-    dir('WRFV3') {
-        sh './run_compile -t -a 79'
+    // Compile WRF
+    dir('WRF') {
+        sh './run_compile -t'
     }
 
     stage 'compile_WPS'
@@ -54,9 +54,9 @@ node ('ccc561.gadi') {
         dir('jan00'){
             if (params.JAN00 == true) {
             	stage 'jan00'
-            	sh 'cp ../../WRFV3/run/run_real ../../WRFV3/run/run_mpi ../../WPS/run_WPS.sh .'
+            	sh 'cp ../../WRF/run/run_real ../../WRF/run/run_mpi ../../WPS/run_WPS.sh .'
             	sh 'cp ../../WPS/namelist.wps.jan00 namelist.wps'
-            	sh 'cp ../../WRFV3/test/em_real/namelist.input.jan00 namelist.input'
+            	sh 'cp ../../WRF/test/em_real/namelist.input.jan00 namelist.input'
             	sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
             	sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
             	sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
@@ -66,9 +66,9 @@ node ('ccc561.gadi') {
         dir('jan00-nesting'){
             if (params.NESTING == true) {
                 stage 'jan00-nesting'
-                sh 'cp ../../WRFV3/run/run_real ../../WRFV3/run/run_mpi ../../WPS/run_WPS.sh .'
+                sh 'cp ../../WRF/run/run_real ../../WRF/run/run_mpi ../../WPS/run_WPS.sh .'
                 sh 'cp ../../WPS/namelist.wps.jan00-nesting namelist.wps'
-                sh 'cp ../../WRFV3/test/em_real/namelist.input.jan00-nesting namelist.input'
+                sh 'cp ../../WRF/test/em_real/namelist.input.jan00-nesting namelist.input'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
@@ -79,9 +79,9 @@ node ('ccc561.gadi') {
         dir('jan00-diagnostics'){
             if (params.DIAG == true) {
                 stage 'jan00-diagnostics'
-                sh 'cp ../../WRFV3/run/run_real ../../WRFV3/run/run_mpi ../../WPS/run_WPS.sh .'
+                sh 'cp ../../WRF/run/run_real ../../WRF/run/run_mpi ../../WPS/run_WPS.sh .'
                 sh 'cp ../../WPS/namelist.wps.jan00-nesting namelist.wps'
-                sh 'cp ../../WRFV3/test/em_real/namelist.input.jan00-diagnostics namelist.input'
+                sh 'cp ../../WRF/test/em_real/namelist.input.jan00-diagnostics namelist.input'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
@@ -91,9 +91,9 @@ node ('ccc561.gadi') {
         dir('jan00-quilting'){
             if (params.QUILTING == true) {
                 stage 'jan00-quilting'
-                sh 'cp ../../WRFV3/run/run_real ../../WRFV3/run/run_mpi ../../WPS/run_WPS.sh .'
+                sh 'cp ../../WRF/run/run_real ../../WRF/run/run_mpi ../../WPS/run_WPS.sh .'
                 sh 'cp ../../WPS/namelist.wps.jan00 namelist.wps'
-                sh 'cp ../../WRFV3/test/em_real/namelist.input.jan00-quilting namelist.input'
+                sh 'cp ../../WRF/test/em_real/namelist.input.jan00-quilting namelist.input'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
@@ -103,9 +103,9 @@ node ('ccc561.gadi') {
         dir('jan00-restart'){
             if (params.RESTART == true) {
                 stage 'jan00-restart'
-                sh 'cp ../../WRFV3/run/run_real ../../WRFV3/run/run_mpi ../../WPS/run_WPS.sh .'
+                sh 'cp ../../WRF/run/run_real ../../WRF/run/run_mpi ../../WPS/run_WPS.sh .'
                 sh 'cp ../../WPS/namelist.wps.jan00 namelist.wps'
-                sh 'cp ../../WRFV3/test/em_real/namelist.input.jan00-restart* .'
+                sh 'cp ../../WRF/test/em_real/namelist.input.jan00-restart* .'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
                 sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
                 sh 'cp namelist.input.jan00-restart1 namelist.input'
