@@ -1,7 +1,7 @@
 node ('saw562.raijin') {
     stage 'extract'
     sh 'rm -rf tests'
-    git changelog: false, poll: false, url: '/projects/WRF/WRFV_${params.VERSION}'
+    git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://bitbucket.org/ccarouge/wrf-testing.git tests'
 
     currentBuild.displayName += ' ' + params.VERSION
