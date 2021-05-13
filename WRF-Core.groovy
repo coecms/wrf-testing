@@ -33,7 +33,7 @@ node ('ccc561.gadi') {
     stage 'compile_WRF'
     // Compile WRFV3
     dir('WRFV3') {
-        sh './run_compile -t'
+        sh './run_compile -t -a 79'
     }
 
     stage 'compile_WPS'
