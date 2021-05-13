@@ -112,16 +112,3 @@
  nio_groups = 1,
  /
 
- &diagnostics
- max_rain_5m                         = 1, 1,
- max_wind_5m                         = 1, 1,
- max_rain_10m                        = 1, 1,
- max_wind_10m                        = 1, 1,
- max_rain_20m                        = 1, 1,
- max_wind_20m                        = 1, 1,
- max_rain_30m                        = 1, 1,
- max_wind_30m                        = 1, 1,
- max_rain_60m                        = 1, 1,
- max_wind_60m                        = 1, 1,
- max_window                          = 60,
- /
