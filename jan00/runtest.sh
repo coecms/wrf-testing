@@ -26,7 +26,7 @@ else
 fi
 
 module purge
-module load openmpi
+module load openmpi/2.1.6
 
 geogrid.exe
 
@@ -36,6 +36,6 @@ ungrib.exe
 
 metgrid.exe
 
-real.exe
+mpirun real.exe
 
 mpirun wrf.exe
