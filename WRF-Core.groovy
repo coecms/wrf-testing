@@ -7,8 +7,8 @@ node ('ccc561.gadi') {
     // git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
     dir('tests') {
-       sh "git branch --track 4.1.1 origin/4.1.1"
-       sh "git checkout 4.1.1"  
+       sh "git branch --track ${params.VERSION} origin/${params.VERSION}"
+       sh "git checkout ${params.VERSION}"  
     }
 
     currentBuild.displayName += ' ' + params.VERSION
