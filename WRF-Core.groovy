@@ -66,6 +66,11 @@ node ('saw562.raijin') {
             sh 'qsub -W umask=0022 -W block=true -v PROJECT,WRF_ROOT runtest.sh'
             sh "module load cdo; for file in wrfxtrm_d*_2000-01-24_12\\:00\\:00; do cdo diffn \$file /projects/WRF/data/KGO/${params.VERSION}/jan00-diagnostics/\$file; done"
         }
+        dir('jan00-quilting'){
+            stage 'jan00-quilting'
+            sh 'qsub -W umask=0022 -W block=true -v PROJECT,WRF_ROOT runtest.sh'
+            sh "module load cdo; cdo diffn wrfout_d01_2000-01-24_12\\:00\\:00 /projects/WRF/data/KGO/${params.VERSION}/jan00/wrfout_d01_2000-01-24_12\\:00\\:00"
+        }
 	dir('UPP'){
             dir('postprd'){
 	        stage 'UPP'
