@@ -3,7 +3,8 @@ node ('saw562.raijin') {
     // Get the tests. Clone the wrf-testing repository again in tests/
     // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf tests'
-    git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
+    git branch: "V${params.VERSION}", changelog: false, poll: false, url: 'https://github.com/coecms/WRF.git'
+    // git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
     dir('tests') {
        sh "git branch --track ${params.VERSION} origin/${params.VERSION}"
