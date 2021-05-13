@@ -6,14 +6,14 @@ node ('saw562.raijin') {
 
     currentBuild.displayName += ' ' + params.VERSION
     env.WRF_ROOT = pwd()
-    
+
     stage 'compile_WRF'
     dir('WRFV3') {
         sh '''
 module purge
-module load intel-fc/15.0.3.187
-module load intel-cc/15.0.3.187
-module load openmpi/1.8.8
+module load intel-fc/17.0.0.098
+module load intel-cc/17.0.0.098
+module load openmpi/1.10.2
 module load netcdf/4.3.3.1
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 ./configure << EOF
@@ -22,14 +22,14 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 EOF'''
         sh 'qsub -W umask=0022 -W block=true run_compile'
     }
-    
+
     stage 'compile_WPS'
     dir('WPS') {
         sh '''
 module purge
-module load intel-fc/15.0.3.187
-module load intel-cc/15.0.3.187
-module load openmpi/1.8.8
+module load intel-fc/17.0.0.098
+module load intel-cc/17.0.0.098
+module load openmpi/1.10.2
 module load netcdf/4.3.3.1
 export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 ./configure << EOF
@@ -37,7 +37,7 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 EOF'''
         sh 'qsub -W umask=0022 -W block=true run_compile'
     }
-    
+
     dir('jenkins-tests'){
         dir('jan00'){
             stage 'jan00'
@@ -56,5 +56,5 @@ EOF'''
             sh 'module load cdo; for file in wrfxtrm_d*_2000-01-24_12\\:00\\:00; do cdo diffn $file /projects/WRF/data/KGO/3.7.1/jan00-diagnostics/$file; done'
         }
     }
-    
+
 }
