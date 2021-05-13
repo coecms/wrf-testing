@@ -9,7 +9,7 @@ node ('saw562.raijin') {
 
     stage 'clean_WRF' 
     dir('WRFV3') {
-       if (params.CLEAN_WRF == 'true') {
+       if (params.CLEAN_WRF == true) {
            sh './clean -a'
        }
        sh 'qsub -W umask=0022 -W block=true -q express -l walltime=1:00 -- sleep 1'
@@ -17,7 +17,7 @@ node ('saw562.raijin') {
     
     stage 'clean_WPS' 
     dir('WPS') {
-       if (params.CLEAN_WPS == 'true') {
+       if (params.CLEAN_WPS == true) {
            sh './clean -a'
        }
        sh 'qsub -W umask=0022 -W block=true -q express -l walltime=1:00 -- sleep 1'
