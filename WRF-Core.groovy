@@ -30,11 +30,7 @@ node ('saw562.raijin') {
 
     stage 'compile_WPS'
     dir('WPS') {
-        sh '''./run_compile > configure.log << EOF
-3
-1
-EOF'''
-        sh 'qsub -W umask=0022 -W depend=afterany:$(tail -n 1 configure.log) -W block=true -q express -l walltime=1:00 -- sleep 1'
+        sh 'qsub -W umask=0022 -W block=true -q express ./run_compile'
     }
 
     dir('tests'){
