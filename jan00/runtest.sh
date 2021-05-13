@@ -36,6 +36,7 @@ cp namelists/namelist.input .
 cp namelists/namelist.wps .
 
 # Link GEOGRID table
+[[ -d geogrid ]] || mkdir geogrid
 ln -sf ${WRF_ROOT}/WPS/geogrid/GEOGRID.TBL geogrid/.
 
 geogrid.exe
@@ -47,6 +48,7 @@ ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS Vtable
 ungrib.exe
 
 # Link METGRID table
+[[ -d metgrid ]] || mkdir metgrid
 ln -sf ${WRF_ROOT}/WPS/metgrid/METGRID.TBL metgrid/.
 
 metgrid.exe
