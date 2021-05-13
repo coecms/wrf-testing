@@ -3,6 +3,10 @@ node ('saw562.raijin') {
     sh 'rm -rf tests'
     git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://bitbucket.org/ccarouge/wrf-testing.git tests'
+    dir('tests') {
+       sh "git branch --track ${params.VERSION} origin/${params.VERSION}"
+       sh "git checkout ${params.VERSION}"  
+    }
 
     currentBuild.displayName += ' ' + params.VERSION
     env.WRF_ROOT = pwd()
