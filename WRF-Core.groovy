@@ -42,6 +42,12 @@ node ('saw562.raijin') {
         sh './run_compile -t'
     }
 
+    stage 'compile_UPP'
+    // Compile UPP
+    dir('UPPV3.2') {
+        sh './run_compile -t'
+    }
+
     dir('tests'){
     // Start run tests.
         dir('jan00'){
@@ -59,6 +65,12 @@ node ('saw562.raijin') {
             stage 'jan00-diagnostics'
             sh 'qsub -W umask=0022 -W block=true -v PROJECT,WRF_ROOT runtest.sh'
             sh "module load cdo; for file in wrfxtrm_d*_2000-01-24_12\\:00\\:00; do cdo diffn \$file /projects/WRF/data/KGO/${params.VERSION}/jan00-diagnostics/\$file; done"
+        }
+	dir('UPP'){
+            dir('postprd'){
+	        stage 'UPP'
+	        sh './run_unipost_frames'
+	    }
         }
     }
 
