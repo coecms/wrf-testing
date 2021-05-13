@@ -7,6 +7,8 @@
 #PBS -l ncpus=4
 #PBS -l mem=4gb
 #PBS -l wd
+#PBS -l storage=scratch/w35
+#PBS -W umash=0022
 
 set -eu
 
