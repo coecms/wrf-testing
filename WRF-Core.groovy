@@ -74,7 +74,7 @@ node ('ccc561.gadi') {
         dir('jan00-diagnostics'){
             stage 'jan00-diagnostics'
             sh 'cp ../../WRFV3/run/run_real ../../WRFV3/run/run_mpi ../../WPS/run_WPS.sh .'
-            sh 'cp ../../WPS/namelist.wps.jan00-diagnostics namelist.wps'
+            sh 'cp ../../WPS/namelist.wps.jan00-nesting namelist.wps'
             sh 'cp ../../WRFV3/test/em_real/namelist.input.jan00-diagnostics namelist.input'
             sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
             sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
