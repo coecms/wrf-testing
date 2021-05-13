@@ -33,7 +33,7 @@ node ('saw562.raijin') {
     stage 'compile_WRF'
     // Compile WRFV3
     dir('WRFV3') {
-        sh 'qsub -W umask=0022 -W block=true -q express ./run_compile'
+        sh './run_compile -t'
     }
 
     stage 'compile_WPS'
