@@ -28,7 +28,7 @@ module load openmpi
 
 geogrid.exe
 
-link_grib.csh /projects/WRF/data/JAN00/2000
+link_grib.csh /projects/WRF/data/JAN00_v4.0.1/fnl_2000012
 
 ungrib.exe
 
