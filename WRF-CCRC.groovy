@@ -25,33 +25,20 @@ node ('saw562.raijin') {
 
     stage 'compile_WRF'
     dir('WRFV3') {
-        sh '''
-module purge
-module load intel-fc/17.0.0.098
-module load intel-cc/17.0.0.098
-module load openmpi/1.10.2
-module load netcdf/4.3.3.1
-export WRFIO_NCD_LARGE_FILE_SUPPORT=1
-./configure << EOF
+        sh '''./run_compile > configure.log << EOF
 3
 1
 EOF'''
-        sh 'qsub -W umask=0022 -W block=true run_compile'
+        sh 'qsub -W umask=0022 -W depend=afterany:$(tail -n 1 configure.log) -W block=true -q express -l walltime=1:00 -- sleep 1'
     }
 
     stage 'compile_WPS'
     dir('WPS') {
-        sh '''
-module purge
-module load intel-fc/17.0.0.098
-module load intel-cc/17.0.0.098
-module load openmpi/1.10.2
-module load netcdf/4.3.3.1
-export WRFIO_NCD_LARGE_FILE_SUPPORT=1
-./configure << EOF
+        sh '''./run_compile > configure.log << EOF
 3
+1
 EOF'''
-        sh 'qsub -W umask=0022 -W block=true run_compile'
+        sh 'qsub -W umask=0022 -W depend=afterany:$(tail -n 1 configure.log) -W block=true -q express -l walltime=1:00 -- sleep 1'
     }
 
     dir('jenkins-tests'){
