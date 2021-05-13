@@ -9,6 +9,7 @@ node ('saw562.raijin') {
 
     stage 'compile_WRF'
     dir('WRFV3') {
+        sh './clean -a'
         sh '''./run_compile > configure.log << EOF
 3
 1
