@@ -28,13 +28,26 @@ fi
 module purge
 module load openmpi/4.0.2
 
+# Copy WRF run/ directory
+cp ${WRF_ROOT}/WRF/run/* .
+
+# Overwrite the namelists with the ones saved for the tests
+cp namelists/namelist.input .
+cp namelists/namelist.wps .
+
+# Link GEOGRID table
+ln -sf ${WRF_ROOT}/WPS/geogrid/GEOGRID.TBL geogrid/.
+
 geogrid.exe
 
-link_grib.csh /g/data/sx70/data/JAN00_v4/fnl_2000012
+link_grib.csh /g/data/sx70/data/SingleDomain_data/matthew/fnl
 # Link Vtable
-ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS.tutorial Vtable
+ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS Vtable
 
 ungrib.exe
+
+# Link METGRID table
+ln -sf ${WRF_ROOT}/WPS/metgrid/METGRID.TBL metgrid/.
 
 metgrid.exe
 
