@@ -31,10 +31,6 @@
  io_form_auxhist3                    = 2
  auxhist3_interval                   = 60,60
  frames_per_auxhist3                 = 31,31
- auxhist7_outname                    = "wrfdly_d<domain>_<date>"
- auxhist7_interval                   = 60, 60
- io_form_auxhist7                    = 2,
- frames_per_auxhist7                 = 31,31
  /
 
  &domains
