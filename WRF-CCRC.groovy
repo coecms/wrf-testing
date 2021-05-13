@@ -19,7 +19,6 @@ node ('saw562.raijin') {
        if (params.CLEAN_WRF == true) {
           sh './clean -a'
        }
-       sh 'qsub -W umask=0022 -W block=true -q express -l walltime=1:00 -- sleep 1'   
     }
 
     stage 'clean_WPS'
@@ -28,7 +27,6 @@ node ('saw562.raijin') {
        if (params.CLEAN_WPS == true) {
           sh './clean -a'
        }
-       sh 'qsub -W umask=0022 -W block=true -q express -l walltime=1:00 -- sleep 1'
     }
 
     stage 'compile_WRF'
