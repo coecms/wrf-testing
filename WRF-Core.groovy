@@ -7,8 +7,8 @@ node ('saw562.raijin') {
     // git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
     dir('tests') {
-       sh "git branch --track 3.9.1.1 origin/3.9.1.1"
-       sh "git checkout 3.9.1.1"  
+       sh "git branch --track 4.0.2 origin/4.0.2"
+       sh "git checkout 4.0.2"  
     }
 
     currentBuild.displayName += ' ' + params.VERSION
