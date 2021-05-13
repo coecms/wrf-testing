@@ -26,11 +26,13 @@ else
 fi
 
 module purge
-module load openmpi/2.1.6
+module load openmpi/4.0.2
 
 geogrid.exe
 
 link_grib.csh /g/data/sx70/data/JAN00_v4/fnl_2000012
+# Link Vtable
+ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS.tutorial Vtable
 
 ungrib.exe
 

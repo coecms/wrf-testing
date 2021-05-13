@@ -7,8 +7,8 @@
 #PBS -l ncpus=4
 #PBS -l mem=4gb
 #PBS -l wd
-#PBS -l storage=scratch/w35
-#PBS -W umash=0022
+#PBS -l storage=scratch/w35+gdata/sx70
+#PBS -W umask=0022
 
 set -eu
 
@@ -26,16 +26,18 @@ else
 fi
 
 module purge
-module load openmpi
+module load openmpi/4.0.2
 
 geogrid.exe
 
-link_grib.csh /projects/WRF/data/JAN00_v4.0.1/fnl_2000012
+link_grib.csh /g/data/sx70/data/JAN00_v4/fnl_2000012
+# Link Vtable
+ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS.tutorial Vtable
 
 ungrib.exe
 
 metgrid.exe
 
-real.exe
+mpirun real.exe
 
 mpirun wrf.exe
