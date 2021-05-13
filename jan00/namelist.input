@@ -69,6 +69,7 @@
  num_land_cat                        = 24,
  num_soil_layers                     = 4,
  sf_urban_physics                    = 0,     0,     0,
+ usemonalb                           = .TRUE.
  /
 
  &fdda
