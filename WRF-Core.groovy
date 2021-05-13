@@ -39,7 +39,7 @@ node ('saw562.raijin') {
     stage 'compile_WPS'
     // Compile WPS
     dir('WPS') {
-        sh 'qsub -W umask=0022 -W block=true -q express ./run_compile'
+        sh './run_compile -t'
     }
 
     dir('tests'){
