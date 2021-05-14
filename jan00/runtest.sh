@@ -12,8 +12,8 @@
 
 set -eu
 
-if [ -x "${WRF_ROOT}/WRFV3/main/real.exe" ]; then
-    export PATH="${WRF_ROOT}/WRFV3/main:${PATH}"
+if [ -x "${WRF_ROOT}/WRF/main/real.exe" ]; then
+    export PATH="${WRF_ROOT}/WRF/main:${PATH}"
 else
     echo "ERROR: WRF not found"
     exit 1
