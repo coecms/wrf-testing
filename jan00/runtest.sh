@@ -56,3 +56,6 @@ metgrid.exe
 mpirun real.exe
 
 mpirun wrf.exe
+
+echo "Exit code from WRF: " $?
+echo "Test run finished"
