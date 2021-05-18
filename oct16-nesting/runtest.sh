@@ -2,10 +2,10 @@
 # Runs the JAN00 WRF test case
 # Path to WPS and WRFV3 directories should be passed as WRF_ROOT
 
-#PBS -q express
+#PBS -q normal
 #PBS -l walltime=15:00
-#PBS -l ncpus=4
-#PBS -l mem=4gb
+#PBS -l ncpus=28
+#PBS -l mem=25gb
 #PBS -l wd
 #PBS -l storage=scratch/w35+gdata/sx70
 #PBS -W umask=0022
@@ -39,7 +39,7 @@ cp namelists/namelist.wps.oct16-nesting namelist.wps
 [[ -d geogrid ]] || mkdir geogrid
 ln -sf ${WRF_ROOT}/WPS/geogrid/GEOGRID.TBL geogrid/.
 
-geogrid.exe
+mpirun -np 4 geogrid.exe
 
 link_grib.csh /g/data/sx70/data/SingleDomain_data/matthew/fnl
 # Link Vtable
@@ -51,7 +51,7 @@ ungrib.exe
 [[ -d metgrid ]] || mkdir metgrid
 ln -sf ${WRF_ROOT}/WPS/metgrid/METGRID.TBL metgrid/.
 
-metgrid.exe
+mpirun -np 4 metgrid.exe
 
 mpirun real.exe
 
