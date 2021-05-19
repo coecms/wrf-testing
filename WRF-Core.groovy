@@ -69,12 +69,7 @@ node ('ccc561.gadi') {
         dir('oct16-diagnostics'){
             if (params.DIAG == true) {
                 stage 'oct16-diagnostics'
-                sh 'cp ../../WRF/run/* ../../WPS/run_WPS.sh .'
-                sh 'cp namelists/namelist.wps-nesting namelist.wps'
-                sh 'cp namelists/namelist.input-diagnostics namelist.input'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
+                sh 'qsub -W block=true -v PROJECT,WRF_ROOT runtest.sh'
                 sh "module load cdo; for file in wrfxtrm_d*_2016-10-06_00\\:00\\:00; do cdo diffn \$file /g/data/sx70/data/KGO/${params.VERSION}/oct16-diagnostics/\$file; done"
             }
         }
