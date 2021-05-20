@@ -73,18 +73,18 @@ node ('ccc561.gadi') {
                 sh "module load cdo; for file in wrfxtrm_d*_2016-10-06_00\\:00\\:00; do cdo diffn \$file /g/data/sx70/data/KGO/${params.VERSION}/oct16-diagnostics/\$file; done"
             }
         }
-        dir('oct16-quilting'){
-            if (params.QUILTING == true) {
-                stage 'oct16-quilting'
-                sh 'cp ../../WRF/run/* ../../WPS/run_WPS.sh .'
-                sh 'cp namelists/namelist.wps namelist.wps'
-                sh 'cp namelists/namelist.input-quilting namelist.input'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
-                sh "module load cdo; cdo diffn wrfout_d01_2016-10-06_00\\:00\\:00 /g/data/sx70/data/KGO/${params.VERSION}/oct16/wrfout_d01_2016-10-06_00\\:00\\:00"
-            }
-        }
+        // dir('oct16-quilting'){
+        //     if (params.QUILTING == true) {
+        //         stage 'oct16-quilting'
+        //         sh 'cp ../../WRF/run/* ../../WPS/run_WPS.sh .'
+        //         sh 'cp namelists/namelist.wps namelist.wps'
+        //         sh 'cp namelists/namelist.input-quilting namelist.input'
+        //         sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
+        //         sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
+        //         sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
+        //         sh "module load cdo; cdo diffn wrfout_d01_2016-10-06_00\\:00\\:00 /g/data/sx70/data/KGO/${params.VERSION}/oct16/wrfout_d01_2016-10-06_00\\:00\\:00"
+        //     }
+        // }
         dir('oct16-restart'){
             if (params.RESTART == true) {
                 stage 'oct16-restart'
