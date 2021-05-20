@@ -88,15 +88,7 @@ node ('ccc561.gadi') {
         dir('oct16-restart'){
             if (params.RESTART == true) {
                 stage 'oct16-restart'
-                sh 'cp ../../WRF/run/* ../../WPS/run_WPS.sh .'
-                sh 'cp namelists/namelist.wps.jan00 namelist.wps'
-                sh 'cp namelists/namelist.input-restart* .'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
-                sh 'cp namelist.input.jan00-restart1 namelist.input'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
-                sh 'cp namelist.input.jan00-restart2 namelist.input'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
+                sh 'qsub -W block=true -v PROJECT,WRF_ROOT runtest.sh'
                 sh './compare_output.sh'
             }
         }

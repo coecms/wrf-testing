@@ -1,19 +1,19 @@
 #!/bin/bash
-# Runs the JAN00 WRF test case
+# Runs the October 2016 WRF test case
 # Path to WPS and WRFV3 directories should be passed as WRF_ROOT
 
-#PBS -q express
+#PBS -q normal
 #PBS -l walltime=15:00
-#PBS -l ncpus=4
-#PBS -l mem=4gb
+#PBS -l ncpus=28
+#PBS -l mem=25gb
 #PBS -l wd
 #PBS -l storage=scratch/w35+gdata/sx70
 #PBS -W umask=0022
 
 set -eu
 
-if [ -x "${WRF_ROOT}/WRFV3/main/real.exe" ]; then
-    export PATH="${WRF_ROOT}/WRFV3/main:${PATH}"
+if [ -x "${WRF_ROOT}/WRF/main/real.exe" ]; then
+    export PATH="${WRF_ROOT}/WRF/main:${PATH}"
 else
     echo "ERROR: WRF not found"
     exit 1
@@ -28,16 +28,38 @@ fi
 module purge
 module load openmpi/4.0.2
 
-geogrid.exe
+# Copy WRF run/ directory
+cp ${WRF_ROOT}/WRF/run/* .
 
-link_grib.csh /g/data/sx70/data/JAN00_v4/fnl_2000012
+# Overwrite the namelists with the ones saved for the tests
+cp namelists/namelist.input-restart1 namelist.input
+cp namelists/namelist.wps namelist.wps
+
+# Link GEOGRID table
+[[ -d geogrid ]] || mkdir geogrid
+ln -sf ${WRF_ROOT}/WPS/geogrid/GEOGRID.TBL geogrid/.
+
+mpirun -np 4 geogrid.exe
+
+link_grib.csh /g/data/sx70/data/SingleDomain_data/matthew/fnl
 # Link Vtable
-ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS.tutorial Vtable
+ln -sf ${WRF_ROOT}/WPS/ungrib/Variable_Tables/Vtable.GFS Vtable
 
 ungrib.exe
 
-metgrid.exe
+# Link METGRID table
+[[ -d metgrid ]] || mkdir metgrid
+ln -sf ${WRF_ROOT}/WPS/metgrid/METGRID.TBL metgrid/.
+
+mpirun -np 4 metgrid.exe
 
 mpirun real.exe
 
 mpirun wrf.exe
+
+# Run restart simulation
+cp namelists/namelist.input-restart2 namelist.input
+mpirun wrf.exe
+
+echo "Exit code from WRF: " $?
+echo "Test run finished"
