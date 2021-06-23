@@ -2,10 +2,10 @@ node ('ccc561.gadi') {
     stage 'extract'
     // Get the tests. Clone the wrf-testing repository again in jenkins-tests/
     // Then checkout the branch for the tested version as indicated in params.VERSION
-    sh 'rm -rf tests'
+    sh 'rm -rf jenkins-tests'
     git changelog: false, poll: false, url: 'https://bitbucket.org/ccarouge/unsw-ccrc-wrf-perso', branch: "V${params.VERSION}"
-    sh 'git clone https://github.com/coecms/wrf-testing.git tests'
-    dir('tests') {
+    sh 'git clone https://github.com/coecms/wrf-testing.git jenkins-tests'
+    dir('jenkins-tests') {
        sh "git branch --track 4.0.2 origin/4.0.2"
        sh "git checkout 4.0.2"  
     }
@@ -42,7 +42,7 @@ node ('ccc561.gadi') {
         sh './run_compile -t'
     }
 
-    dir('tests'){
+    dir('jenkins-tests'){
         // Start run tests.
         dir('jan00'){
             if (params.JAN00 == true) {
