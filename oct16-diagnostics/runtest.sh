@@ -4,8 +4,8 @@
 
 #PBS -q normal
 #PBS -l walltime=15:00
-#PBS -l ncpus=28
-#PBS -l mem=25gb
+#PBS -l ncpus=4
+#PBS -l mem=4gb
 #PBS -l wd
 #PBS -l storage=scratch/w35+gdata/sx70
 #PBS -W umask=0022
