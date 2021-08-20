@@ -31,6 +31,24 @@
  io_form_auxhist3                    = 2
  auxhist3_interval                   = 60,60
  frames_per_auxhist3                 = 31,31
+ auxhist7_outname                    = "wrfdly_d<domain>_<date>"
+ io_form_auxhist7                    = 2
+ auxhist7_interval                   = 60
+ frames_per_auxhist7                 = 31
+ /
+
+ &diagnostics                        
+ max_window                          = 30
+ max_rain_5m                         = 1
+ max_rain_10m                        = 1
+ max_rain_20m                        = 1
+ max_rain_30m                        = 1
+ max_rain_60m                        = 1
+ max_wind_5m                         = 1
+ max_wind_10m                        = 1
+ max_wind_20m                        = 1
+ max_wind_30m                        = 1
+ max_wind_60m                        = 1
  /
 
  &domains
