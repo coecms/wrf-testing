@@ -81,7 +81,7 @@ node ('ccc561.gadi') {
         dir('oct16-restart'){
             if (params.RESTART == true) {
                 stage 'oct16-restart'
-                sh 'qsub -W block=true -v PROJECT,WRF_ROOT runtest.sh'
+                sh 'qsub -W block=true -v PROJECT,WRF_ROOT runtest_CCRC.sh'
                 sh './compare_output.sh'
             }
         }
