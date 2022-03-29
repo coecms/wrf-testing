@@ -3,7 +3,7 @@ node ('ccc561.gadi') {
     // Get the tests. Clone the wrf-testing repository again in jenkins-tests/
     // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf jenkins-tests'
-    git changelog: false, poll: false, url: 'https://bitbucket.org/ccarouge/unsw-ccrc-wrf-perso', branch: "V${params.VERSION}"
+    git changelog: false, poll: false, url: 'https://github.com/ccarouge/WRF/', branch: "V${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git jenkins-tests'
     dir('jenkins-tests') {
        sh "git branch --track 4.3 origin/4.3"
