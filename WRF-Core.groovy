@@ -4,11 +4,12 @@ node ('ccc561.gadi') {
     // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf tests'
     git branch: "V${params.VERSION}", changelog: false, poll: false, url: 'https://github.com/coecms/WRF.git'
+    git submodule update --init --recursive
     // git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
     dir('tests') {
-       sh "git branch --track 4.3 origin/4.3"
-       sh "git checkout 4.3"  
+       sh "git branch --track 4.4 origin/4.4"
+       sh "git checkout 4.4"  
     }
 
     currentBuild.displayName += ' ' + params.VERSION
