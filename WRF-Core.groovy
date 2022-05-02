@@ -4,7 +4,6 @@ node ('ccc561.gadi') {
     // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf tests'
     git branch: "V${params.VERSION}", changelog: false, poll: false, url: 'https://github.com/coecms/WRF.git'
-    sh 'git submodule update --init --recursive'
     // git changelog: false, poll: false, url: "/projects/WRF/WRFV_${params.VERSION}"
     sh 'git clone https://github.com/coecms/wrf-testing.git tests'
     dir('tests') {
@@ -35,6 +34,7 @@ node ('ccc561.gadi') {
     stage 'compile_WRF'
     // Compile WRF
     dir('WRF') {
+        sh 'git submodule update --init --recursive'
         sh './run_compile -t'
     }
 
