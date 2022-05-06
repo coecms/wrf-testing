@@ -3,11 +3,11 @@ node ('ccc561.gadi') {
     // Get the tests. Clone the wrf-testing repository again in jenkins-tests/
     // Then checkout the branch for the tested version as indicated in params.VERSION
     sh 'rm -rf jenkins-tests'
-    git changelog: false, poll: false, url: 'https://github.com/ccarouge/WRF/', branch: "V${params.VERSION}"
+    git changelog: false, poll: false, url: 'https://github.com/ccarouge/WRF/', branch: "V${params.VERSION}_CCRC"
     sh 'git clone https://github.com/coecms/wrf-testing.git jenkins-tests'
     dir('jenkins-tests') {
-       sh "git branch --track 4.3 origin/4.3"
-       sh "git checkout 4.3"  
+       sh "git branch --track 4.4 origin/4.4"
+       sh "git checkout 4.4"  
     }
 
     currentBuild.displayName += ' ' + params.VERSION
@@ -33,6 +33,7 @@ node ('ccc561.gadi') {
     stage 'compile_WRF'
     // Compile WRF
     dir('WRF') {
+        sh 'git submodule update --init --recursive'
         sh './run_compile -t'
     }
 
@@ -66,18 +67,6 @@ node ('ccc561.gadi') {
                 sh "module load cdo; for file in wrfxtrm_d*_2016-10-06_00\\:00\\:00; do cdo diffn \$file /g/data/sx70/data/KGO/${params.VERSION}/oct16-diagnostics/\$file; done"
             }
         }
-        // dir('oct16-quilting'){
-        //     if (params.QUILTING == true) {
-        //         stage 'oct16-quilting'
-        //         sh 'cp ../../WRF/run/* ../../WPS/run_WPS.sh .'
-        //         sh 'cp namelists/namelist.wps namelist.wps'
-        //         sh 'cp namelists/namelist.input-quilting namelist.input'
-        //         sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_WPS.sh'
-        //         sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_real'
-        //         sh 'qsub -W block=true -v PROJECT,WRF_ROOT run_mpi'
-        //         sh "module load cdo; cdo diffn wrfout_d01_2016-10-06_00\\:00\\:00 /g/data/sx70/data/KGO/${params.VERSION}/oct16/wrfout_d01_2016-10-06_00\\:00\\:00"
-        //     }
-        // }
         dir('oct16-restart'){
             if (params.RESTART == true) {
                 stage 'oct16-restart'
